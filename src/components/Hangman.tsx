@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react'
 
 // UTIL
+import { randomWord } from '../words'
+
 import img0 from '../imgs/0.jpg'
 import img1 from '../imgs/1.jpg'
 import img2 from '../imgs/2.jpg'
@@ -16,7 +18,7 @@ type HangmanProps = Readonly<{
 }>
 
 export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
-	const [ answer, setAnswer] = useState<string>('apple')
+	const [ answer, setAnswer] = useState<string>(randomWord())
 	const [ guessed, setGuessed ] = useState<string[]>([])
 	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
 	const [ gameOver, setGameOver ] = useState<boolean>(false)
@@ -36,6 +38,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 	}
 
 	const restart = () => {
+		setAnswer(randomWord())
 		setGuessed([])
 		setWrongCnt(0)
 		setGameOver(false)
