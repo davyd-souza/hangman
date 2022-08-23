@@ -2,14 +2,23 @@
 import { useState } from 'react'
 
 // UTIL
+import img0 from '../imgs/0.jpg'
+import img1 from '../imgs/1.jpg'
+import img2 from '../imgs/2.jpg'
+import img3 from '../imgs/3.jpg'
+import img4 from '../imgs/4.jpg'
+import img5 from '../imgs/5.jpg'
+import img6 from '../imgs/6.jpg'
+
 type HangmanProps = Readonly<{
 	maxGuesses?: number
 	imgs?: string[]
 }>
 
-export function Hangman({ maxGuesses = 6 }: HangmanProps) {
+export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
 	const [ answer, setAnswer] = useState<string>('apple')
 	const [ guessed, setGuessed ] = useState<string[]>([])
+	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
 
 	const generateButtons = () => {
 		return "abcedfghijklmnopqrstuvwxyz".split("").map(l => 
@@ -28,11 +37,14 @@ export function Hangman({ maxGuesses = 6 }: HangmanProps) {
 	const handleGuess = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		const btn = e.target as HTMLButtonElement
 		setGuessed(prevState => [btn.value, ...prevState])
+		setWrongCnt(wrongCnt + (answer.includes(btn.value) ? 0 : 1))
 	}
 
 	return (
 
 		<div className="Hangman">
+			
+			<img src={imgs[wrongCnt]} alt={`out of ${maxGuesses} you guessed wrong: ${wrongCnt} times`} />
 			<div className="Hangman-word">
 				{
 					answer.split("").map(l => guessed.includes(l) ? l : " _ ")
@@ -41,6 +53,13 @@ export function Hangman({ maxGuesses = 6 }: HangmanProps) {
 
 			<div className="Hangman-count">
 				<h2>Count</h2>
+				<p>
+					{
+						wrongCnt
+							? `${wrongCnt}/${maxGuesses}`
+							: `There have been no attempts yet.`
+					}
+				</p>
 				<p>
 					{
 						answer
