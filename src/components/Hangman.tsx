@@ -1,5 +1,5 @@
 // DEPENDENCY
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // UTIL
 import img0 from '../imgs/0.jpg'
@@ -19,6 +19,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 	const [ answer, setAnswer] = useState<string>('apple')
 	const [ guessed, setGuessed ] = useState<string[]>([])
 	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
+	const [ gameOver, setGameOver ] = useState<boolean>(false)
 
 	const generateButtons = () => {
 		return "abcedfghijklmnopqrstuvwxyz".split("").map(l => 
@@ -26,7 +27,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 				key={l}
 				value={l}
 				onClick={handleGuess}
-				disabled={guessed.includes(l)}
+				disabled={guessed.includes(l) || gameOver}
 				style={{margin: '2px', padding: '2px'}}
 			>
 					{l}
@@ -40,11 +41,22 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 		setWrongCnt(wrongCnt + (answer.includes(btn.value) ? 0 : 1))
 	}
 
+	const handleGameOver = () => {
+		setGameOver(true)
+	}
+
+	useEffect(() => {
+		if (wrongCnt === maxGuesses) handleGameOver()
+	}, [wrongCnt])
+
 	return (
 
 		<div className="Hangman">
-			
+
+			{ gameOver && <p>You Lose</p> }
+
 			<img src={imgs[wrongCnt]} alt={`out of ${maxGuesses} you guessed wrong: ${wrongCnt} times`} />
+			
 			<div className="Hangman-word">
 				{
 					answer.split("").map(l => guessed.includes(l) ? l : " _ ")
