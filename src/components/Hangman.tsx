@@ -35,6 +35,12 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 		)
 	}
 
+	const restart = () => {
+		setGuessed([])
+		setWrongCnt(0)
+		setGameOver(false)
+	}
+
 	const handleGuess = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		const btn = e.target as HTMLButtonElement
 		setGuessed(prevState => [btn.value, ...prevState])
@@ -44,6 +50,8 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 	const handleGameOver = () => {
 		setGameOver(true)
 	}
+
+	const handleRestart = () => restart()
 
 	useEffect(() => {
 		if (wrongCnt === maxGuesses) handleGameOver()
@@ -56,7 +64,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 			{ gameOver && <p>You Lose</p> }
 
 			<img src={imgs[wrongCnt]} alt={`out of ${maxGuesses} you guessed wrong: ${wrongCnt} times`} />
-			
+
 			<div className="Hangman-word">
 				{
 					answer.split("").map(l => guessed.includes(l) ? l : " _ ")
@@ -82,7 +90,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 			</div>
 
 			<div className="Hangman-keyboard">{ generateButtons()	}</div>
-			<button>Restart</button>
+			<button onClick={handleRestart}>Restart</button>
 		</div>
 	)
 }
