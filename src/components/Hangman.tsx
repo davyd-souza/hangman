@@ -22,6 +22,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 	const [ guessed, setGuessed ] = useState<string[]>([])
 	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
 	const [ gameOver, setGameOver ] = useState<boolean>(false)
+	const [ win, setWin ] = useState<boolean>(false)
 
 	const generateButtons = () => {
 		return "abcedfghijklmnopqrstuvwxyz".split("").map(l => 
@@ -29,7 +30,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 				key={l}
 				value={l}
 				onClick={handleGuess}
-				disabled={guessed.includes(l) || gameOver}
+				disabled={guessed.includes(l) || gameOver || win}
 				style={{margin: '2px', padding: '2px'}}
 			>
 					{l}
@@ -42,6 +43,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 		setGuessed([])
 		setWrongCnt(0)
 		setGameOver(false)
+		setWin(false)
 	}
 
 	const handleGuess = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -50,28 +52,32 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 		setWrongCnt(wrongCnt + (answer.includes(btn.value) ? 0 : 1))
 	}
 
-	const handleGameOver = () => {
-		setGameOver(true)
-	}
+	const handleGameOver = () => setGameOver(true)
 
 	const handleRestart = () => restart()
 
-	useEffect(() => {
+	const handleWin = () => setWin(true)
+
+	useEffect(() => {		
+		console.log("> [useEffect] answer:", answer)
 		if (wrongCnt === maxGuesses) handleGameOver()
-	}, [wrongCnt])
+		if (answer.split("").every(l => guessed.includes(l))) handleWin()
+	}, [maxGuesses, guessed, wrongCnt, answer])
 
 	return (
 
 		<div className="Hangman">
-
+			{ win && <p>You WIN!!</p> }
 			{ gameOver && <p>You Lose</p> }
 
 			<img src={imgs[wrongCnt]} alt={`out of ${maxGuesses} you guessed wrong: ${wrongCnt} times`} />
 
 			<div className="Hangman-word">
-				{
-					answer.split("").map(l => guessed.includes(l) ? l : " _ ")
-				}
+				<p>
+					{
+						answer.split("").map(l => guessed.includes(l) ? ` ${l} ` : " _ ")
+					}
+				</p>
 			</div>
 
 			<div className="Hangman-count">
