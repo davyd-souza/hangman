@@ -1,6 +1,9 @@
 // DEPENDENCY
 import { useState, useEffect } from 'react'
 
+// COMPOMENT
+import { Keyboard } from './Keyboard'
+
 // UTIL
 import { randomWord } from '../words'
 
@@ -17,26 +20,14 @@ type HangmanProps = Readonly<{
 	imgs?: string[]
 }>
 
+const letters = "abcedfghijklmnopqrstuvwxyz"
+
 export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
 	const [ answer, setAnswer] = useState<string>(randomWord())
 	const [ guessed, setGuessed ] = useState<string[]>([])
 	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
 	const [ gameOver, setGameOver ] = useState<boolean>(false)
 	const [ win, setWin ] = useState<boolean>(false)
-
-	const generateButtons = () => {
-		return "abcedfghijklmnopqrstuvwxyz".split("").map(l => 
-			<button 
-				key={l}
-				value={l}
-				onClick={handleGuess}
-				disabled={guessed.includes(l) || gameOver || win}
-				style={{margin: '2px', padding: '2px'}}
-			>
-					{l}
-			</button>
-		)
-	}
 
 	const restart = () => {
 		setAnswer(randomWord())
@@ -46,7 +37,7 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 		setWin(false)
 	}
 
-	const handleGuess = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	const checkGuess = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		const btn = e.target as HTMLButtonElement
 		setGuessed(prevState => [btn.value, ...prevState])
 		setWrongCnt(wrongCnt + (answer.includes(btn.value) ? 0 : 1))
@@ -98,7 +89,9 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 				</p>
 			</div>
 
-			<div className="Hangman-keyboard">{ generateButtons()	}</div>
+			<div className="Hangman-keyboard">
+				<Keyboard letters={letters} checkGuess={checkGuess} isDisabled={gameOver || win} guessed={guessed}/>
+			</div>
 			<button onClick={handleRestart}>Restart</button>
 		</div>
 	)
