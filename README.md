@@ -3,7 +3,7 @@
   Guess the word before the stickman is fully drawn
 </p>
 <h2 align="center">
-  🚧  Em construção...  🚧
+  🚧  In construction...  🚧
 </h2>
 <p align="center">
   <a href="#tech">Technologies</a> •
@@ -53,13 +53,14 @@ $ npm start
 
 
 
-<h2 id="ideas">Improvement Ideas</h2>
+<h2 id="ideas">💡 Improvement Ideas</h2>
 
 - [ ] Streak (How many times you won without losing or restarting)
 - [ ] How long it took to complete
 - [ ] Timer (to end game)
 - [ ] Dark theme
 - [ ] Categories
+- [ ] Get words from an API
 - [ ] Portuguese Brazilian Words
 
 
