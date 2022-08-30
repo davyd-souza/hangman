@@ -7,23 +7,23 @@ import { Keyboard } from './Keyboard'
 // UTIL
 import { randomWord } from '../words'
 
-import img0 from '../imgs/0.jpg'
-import img1 from '../imgs/1.jpg'
-import img2 from '../imgs/2.jpg'
-import img3 from '../imgs/3.jpg'
-import img4 from '../imgs/4.jpg'
-import img5 from '../imgs/5.jpg'
-import img6 from '../imgs/6.jpg'
+import img0 from '../imgs/0.png'
+import img1 from '../imgs/1.png'
+import img2 from '../imgs/2.png'
+import img3 from '../imgs/3.png'
+import img4 from '../imgs/4.png'
+import img5 from '../imgs/5.png'
+import img6 from '../imgs/6.png'
 
 type HangmanProps = Readonly<{
 	maxGuesses?: number
 	imgs?: string[]
 }>
 
-const letters = "abcedfghijklmnopqrstuvwxyz"
+const letters = "qwertyuiopasdfghjklçzxcvbnm"
 
 export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
-	const [ answer, setAnswer] = useState<string>(randomWord())
+	const [ answer, setAnswer ] = useState<string>(randomWord())
 	const [ guessed, setGuessed ] = useState<string[]>([])
 	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
 	const [ gameOver, setGameOver ] = useState<boolean>(false)
