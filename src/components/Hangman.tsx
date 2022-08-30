@@ -16,13 +16,14 @@ import img5 from '../imgs/5.png'
 import img6 from '../imgs/6.png'
 
 type HangmanProps = Readonly<{
+	title: string
 	maxGuesses?: number
 	imgs?: string[]
 }>
 
 const letters = "qwertyuiopasdfghjklçzxcvbnm"
 
-export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
+export function Hangman({ title="Hangman", maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
 	const [ answer, setAnswer ] = useState<string>(randomWord())
 	const [ guessed, setGuessed ] = useState<string[]>([])
 	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
@@ -49,50 +50,50 @@ export function Hangman({ maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, 
 
 	const handleWin = () => setWin(true)
 
-	useEffect(() => {		
-		console.log("> [useEffect] answer:", answer)
+	useEffect(() => {
 		if (wrongCnt === maxGuesses) handleGameOver()
 		if (answer.split("").every(l => guessed.includes(l))) handleWin()
 	}, [maxGuesses, guessed, wrongCnt, answer])
 
 	return (
+		<>
+			<header className="Hangman-header">
+				<h2>{title}</h2>
+			</header>
 
-		<div className="Hangman">
-			{ win && <p>You WIN!!</p> }
-			{ gameOver && <p>You Lose</p> }
+			<section className="Hangman-notify">
+				{ win && <p className="Hangman-tag win">you win!</p> }
+				{ gameOver && <p className="Hangman-tag lose">you lose</p> }
+			</section>
 
-			<img src={imgs[wrongCnt]} alt={`out of ${maxGuesses} you guessed wrong: ${wrongCnt} times`} />
+			<main className="Hangman-guess">
+				<img
+					className="Hangman-img" 
+					src={imgs[wrongCnt]} 
+					alt={`out of ${maxGuesses} you guessed wrong: ${wrongCnt} times`} 
+				/>
+				
+				<div className="Hangman-answer">
+				{
+						gameOver
+							? answer.split("").map(l => <div className="Hangman-letter"> {l} </div>)
+							: answer.split("").map(l => <div className="Hangman-letter"> { guessed.includes(l) ? `${l}` : "" } </div>)
+				}
 
-			<div className="Hangman-word">
-				<p>
-					{
-						answer.split("").map(l => guessed.includes(l) ? ` ${l} ` : " _ ")
-					}
-				</p>
-			</div>
+				</div>
+			</main>
 
-			<div className="Hangman-count">
-				<h2>Count</h2>
-				<p>
-					{
-						wrongCnt
-							? `${wrongCnt}/${maxGuesses}`
-							: `There have been no attempts yet.`
-					}
-				</p>
-				<p>
-					{
-						answer
-							? `Answer has: ${answer.length} letters.`
-							: `There's no answer.`
-					}
-				</p>
-			</div>
-
-			<div className="Hangman-keyboard">
+			<section className="Hangman-keyboard">
 				<Keyboard letters={letters} checkGuess={checkGuess} isDisabled={gameOver || win} guessed={guessed}/>
-			</div>
-			<button onClick={handleRestart}>Restart</button>
-		</div>
+				<button
+					className="Hangman-reset" 
+					onClick={handleRestart}
+				>
+					Restart
+				</button>
+			</section>
+			
+		</>
+
 	)
 }
