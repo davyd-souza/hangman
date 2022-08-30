@@ -7,10 +7,7 @@ import './App.css';
 function App() {
 	return (
 		<div className="App">
-			<header>
-				<h1>Hangman</h1>
-				<Hangman />
-			</header>
+			<Hangman title="hangman"/>
 		</div>
 	);
 }
