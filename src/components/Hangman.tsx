@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react'
 // COMPOMENT
 import { Keyboard } from './Keyboard'
 
+// STYLE
+import './Hangman.css'
+
 // UTIL
 import { randomWord } from '../words'
 
@@ -92,7 +95,7 @@ export function Hangman({ title="Hangman", maxGuesses = 6, imgs = [img0, img1, i
 					Restart
 				</button>
 			</section>
-			
+
 		</>
 
 	)
