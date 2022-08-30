@@ -3,7 +3,7 @@
   Guess the word before the stickman is fully drawn
 </p>
 <h2 align="center">
-  🚧  In construction...  🚧
+  <img src="https://media.giphy.com/media/EcGYhyJgVvYYHEM09Q/giphy.gif" alt="Hangman application" align="center">
 </h2>
 <p align="center">
   <a href="#tech">Technologies</a> •
@@ -37,7 +37,7 @@
 Before cloning the repository into your machine you'll need: [Git](https://git-scm.com) and [NodeJS](https://nodejs.org/en/). Also it is good to have a code editor like [VSCode](https://code.visualstudio.com/).
 ```bash
 #Clone this repository
-$ git clone https://github.com/davyd-souza/hangman.git lottery
+$ git clone https://github.com/davyd-souza/hangman.git hangman
 
 #Go into the repository
 $ cd hangman
@@ -55,8 +55,10 @@ $ npm start
 
 <h2 id="ideas">💡 Improvement Ideas</h2>
 
+- [ ] Keyboard support
+- [ ] Flashy effects for win/lose condition
 - [ ] Streak (How many times you won without losing or restarting)
-- [ ] How long it took to complete
+- [ ] How long it took to guess
 - [ ] Timer (to end game)
 - [ ] Dark theme
 - [ ] Categories
