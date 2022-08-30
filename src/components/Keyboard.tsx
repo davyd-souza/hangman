@@ -1,3 +1,5 @@
+// STYLE
+import './Keyboard.css'
 // UTIL
 type KeyboardProps = {
 	letters: string
@@ -21,7 +23,6 @@ function Keyboard({ letters, checkGuess, guessed, isDisabled}: KeyboardProps) {
 						value={letter} 
 						onClick={handleGuess}
 						disabled={isDisabled || guessed.includes(letter)}
-						style={{margin: '2px', padding: '2px'}}
 					>
 						{letter}
 					</button>
