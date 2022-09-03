@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 
 // STYLE
-import './index.css'
+import './main.css'
 
 
 const root = ReactDOM.createRoot(
