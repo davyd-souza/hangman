@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 
 // COMPOMENT
-import { Keyboard } from './Keyboard'
+import { HmKey } from './HmKey'
 
 // STYLE
 import './Hangman.css'
@@ -24,9 +24,9 @@ type HangmanProps = Readonly<{
 	imgs?: string[]
 }>
 
-const letters = "qwertyuiopasdfghjklçzxcvbnm"
+const letters = "qwertyuiopasdfghjklzxcvbnm".split("")
 
-export function Hangman({ title="Hangman", maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
+export function Hangman({ title, maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
 	const [ answer, setAnswer ] = useState<string>(randomWord())
 	const [ guessed, setGuessed ] = useState<string[]>([])
 	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
@@ -41,22 +41,15 @@ export function Hangman({ title="Hangman", maxGuesses = 6, imgs = [img0, img1, i
 		setWin(false)
 	}
 
-	const checkGuess = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		const btn = e.target as HTMLButtonElement
-		setGuessed(prevState => [btn.value, ...prevState])
-		setWrongCnt(wrongCnt + (answer.includes(btn.value) ? 0 : 1))
+	const checkGuess = (letter: string) => {		
+		setGuessed([...guessed, letter])
+		setWrongCnt(wrongCnt + (answer.includes(letter) ? 0 : 1 ))
 	}
 
-	const handleGameOver = () => setGameOver(true)
-
-	const handleRestart = () => restart()
-
-	const handleWin = () => setWin(true)
-
 	useEffect(() => {
-		if (wrongCnt === maxGuesses) handleGameOver()
-		if (answer.split("").every(l => guessed.includes(l))) handleWin()
-	}, [maxGuesses, guessed, wrongCnt, answer])
+		if (wrongCnt === maxGuesses) setGameOver(true)
+		if (answer.split("").every(l => guessed.includes(l))) setWin(true)
+	}, [maxGuesses, guessed, wrongCnt])
 
 	return (
 		<>
@@ -87,11 +80,16 @@ export function Hangman({ title="Hangman", maxGuesses = 6, imgs = [img0, img1, i
 			</main>
 
 			<section className="Hangman-keyboard">
-				<Keyboard letters={letters} checkGuess={checkGuess} isDisabled={gameOver || win} guessed={guessed}/>
-				<button
-					className="Hangman-reset" 
-					onClick={handleRestart}
-				>
+				{
+					letters.map(letter => <HmKey 
+							key={letter}
+							letter={letter}
+							isDisabled={win || gameOver || guessed.includes(letter)}
+							checkGuess={checkGuess}
+						/>
+					)
+				}
+				<button	className="Hangman-reset" onClick={restart}>
 					Restart
 				</button>
 			</section>

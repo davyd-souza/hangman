@@ -1,4 +1,4 @@
-.Keyboard-key {
+.HmKey {
 	background-color: var(--fg-color);
 
 	text-transform: uppercase;
@@ -10,6 +10,6 @@
 	cursor: pointer;
 }
 
-.Keyboard-key:disabled {
+.HmKey:disabled {
 	background-color: #ccc;
 }
