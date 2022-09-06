@@ -7,6 +7,12 @@ import { HmKey } from './HmKey'
 // STYLE
 import styled from 'styled-components'
 const Header = styled.header`
+	display: grid;
+
+	grid-template-columns: 5% 90% 5%;
+	place-items: center;
+
+	width: 100%;
 	text-transform: uppercase;
   text-align: center;
   color: var(--font-clr);
@@ -110,7 +116,6 @@ const RestartBtn = styled.button`
 // UTIL
 import { randomWord } from '../words'
 
-// import img0 from '../imgs/test.svg'
 import img0 from '../imgs/0.png'
 import img1 from '../imgs/1.png'
 import img2 from '../imgs/2.png'
@@ -123,11 +128,13 @@ type HangmanProps = Readonly<{
 	title: string
 	maxGuesses?: number
 	imgs?: string[]
+	theme: string
+	toggleTheme: () => void
 }>
 
 const letters = "qwertyuiopasdfghjklzxcvbnm".split("")
 
-export function Hangman({ title, maxGuesses = 6, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
+export function Hangman({ title, maxGuesses = 6, theme, toggleTheme, imgs = [img0, img1, img2, img3, img4, img5, img6] }: HangmanProps) {
 	const [ answer, setAnswer ] = useState<string>(randomWord())
 	const [ guessed, setGuessed ] = useState<string[]>([])
 	const [ wrongCnt, setWrongCnt ] = useState<number>(0)
@@ -147,6 +154,8 @@ export function Hangman({ title, maxGuesses = 6, imgs = [img0, img1, img2, img3,
 		setWrongCnt(wrongCnt + (answer.includes(letter) ? 0 : 1 ))
 	}
 
+	const handleToggleTheme = () => toggleTheme()
+
 	useEffect(() => {
 		if (wrongCnt === maxGuesses) setGameOver(true)
 		if (answer.split("").every(l => guessed.includes(l))) setWin(true)
@@ -156,7 +165,15 @@ export function Hangman({ title, maxGuesses = 6, imgs = [img0, img1, img2, img3,
 	return (
 		<>		
 			<Header>
+				<p></p>
 				<h2>{title}</h2>
+				<a onClick={handleToggleTheme}>
+					{
+						theme === 'light' 
+						? <i className="fa-solid fa-moon theme-text"></i> 
+						: <i className="fa-solid fa-sun theme-text"></i>
+					}
+				</a>
 			</Header>
 
 			<NotifySection>
