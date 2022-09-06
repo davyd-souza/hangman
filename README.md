@@ -60,7 +60,7 @@ $ npm start
 - [ ] Streak (How many times you won without losing or restarting)
 - [ ] How long it took to guess
 - [ ] Timer (to end game)
-- [ x ] Dark theme
+- [x] Dark theme
 - [ ] Categories
 - [ ] Get words from an API
 - [ ] Portuguese Brazilian Words
