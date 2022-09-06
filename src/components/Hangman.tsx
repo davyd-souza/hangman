@@ -116,13 +116,13 @@ const RestartBtn = styled.button`
 // UTIL
 import { randomWord } from '../words'
 
-import img0 from '../../public/imgs/0.png'
-import img1 from '../../public/imgs/1.png'
-import img2 from '../../public/imgs/2.png'
-import img3 from '../../public/imgs/3.png'
-import img4 from '../../public/imgs/4.png'
-import img5 from '../../public/imgs/5.png'
-import img6 from '../../public/imgs/6.png'
+import img0 from '../imgs/0.png'
+import img1 from '../imgs/1.png'
+import img2 from '../imgs/2.png'
+import img3 from '../imgs/3.png'
+import img4 from '../imgs/4.png'
+import img5 from '../imgs/5.png'
+import img6 from '../imgs/6.png'
 
 type HangmanProps = Readonly<{
 	title: string
