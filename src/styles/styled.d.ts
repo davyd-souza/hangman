@@ -14,7 +14,3 @@ interface ColorsProps {
 	accent: string
 	font: string
 }
-
-// bg: 
-// fg
-// font

@@ -1,5 +1,21 @@
 // STYLE
-import './HmKey.css'
+import styled from 'styled-components'
+const StyledButton = styled.button`
+	background-color: var(--primary-clr);
+
+	text-transform: uppercase;
+	font-size: 1.8rem;
+	color: var(--font-clr);
+
+	border-radius: 8px;
+
+	cursor: pointer;
+
+
+	&:disabled {
+		background-color: var(--accent-clr);
+	}
+`
 
 // UTIL
 type HmKeyProps = {
@@ -16,12 +32,12 @@ export function HmKey({ letter, isDisabled, checkGuess}: HmKeyProps) {
 		checkGuess(btn.value)
 	}
 	
-	return <button
-			className="HmKey"
+	return <StyledButton
+			// className="HmKey"
 			value={letter} 
 			onClick={handleGuess}
 			disabled={isDisabled}
 		>
 			{letter}
-		</button>
+		</StyledButton>
 }
