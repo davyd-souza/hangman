@@ -1,18 +1,18 @@
-// DEPENDENCY
-import { useState } from 'react';
-
 // COMPONENT
 import { Hangman } from './components/Hangman'
 
 // STYLE
 import './App.css';
 import GlobalStyle from './styles/global'
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider, DefaultTheme } from 'styled-components'
 import light from './styles/themes/light'
 import dark from './styles/themes/dark'
 
+// UTIL
+import { usePersistedState } from './hooks/usePersistedState'
+
 function App() {
-	const [ theme, setTheme ] = useState(dark)
+	const [ theme, setTheme ] = usePersistedState<DefaultTheme>('theme', light)
 
 	const toggleTheme = () => setTheme(theme.title === 'light' ? dark : light)
 
